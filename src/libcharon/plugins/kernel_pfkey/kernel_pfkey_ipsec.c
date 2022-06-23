@@ -1659,6 +1659,16 @@ static status_t get_spi_internal(private_kernel_pfkey_ipsec_t *this,
 	return SUCCESS;
 }
 
+METHOD(kernel_ipsec_t, get_features, kernel_feature_t,
+	private_kernel_pfkey_ipsec_t *this)
+{
+#ifdef __APPLE__
+	return KERNEL_SA_USE_TIME;
+#else
+	return 0;
+#endif
+}
+
 METHOD(kernel_ipsec_t, get_spi, status_t,
 	private_kernel_pfkey_ipsec_t *this, host_t *src, host_t *dst,
 	uint8_t protocol, uint32_t *spi)
@@ -3309,6 +3319,7 @@ kernel_pfkey_ipsec_t *kernel_pfkey_ipsec_create()
 	INIT(this,
 		.public = {
 			.interface = {
+				.get_features = _get_features,
 				.get_spi = _get_spi,
 				.get_cpi = _get_cpi,
 				.add_sa  = _add_sa,
