@@ -1,0 +1,36 @@
+moon::iptables-restore < /etc/iptables.rules
+sun::iptables-restore < /etc/iptables.rules
+earth::iptables-restore < /etc/iptables.rules
+moon::ip tunnel add vti-moon local PH_IP_MOON remote PH_IP_SUN mode vti key 42
+moon::ip tunnel add vti-moon4 local PH_IP_MOON remote PH_IP_EARTH mode vti key 63
+moon::sysctl -w net.ipv4.conf.vti-moon.disable_policy=1
+moon::sysctl -w net.ipv4.conf.vti-moon4.disable_policy=1
+moon::ip link set vti-moon up
+moon::ip link set vti-moon4 up
+moon::ip route add 10.2.0.0/16 dev vti-moon
+moon::ip route add 10.4.0.0/16 dev vti-moon4
+moon::iptables -A FORWARD -i vti-moon -j ACCEPT
+moon::iptables -A FORWARD -o vti-moon -j ACCEPT
+moon::iptables -A FORWARD -i vti-moon4 -j ACCEPT
+moon::iptables -A FORWARD -o vti-moon4 -j ACCEPT
+sun::ip tunnel add vti-sun local PH_IP_SUN remote PH_IP_MOON mode vti key 1337
+sun::sysctl -w net.ipv4.conf.vti-sun.disable_policy=1
+sun::ip link set vti-sun up
+sun::ip route add 10.1.0.0/16 dev vti-sun
+sun::iptables -A FORWARD -i vti-sun -j ACCEPT
+sun::iptables -A FORWARD -o vti-sun -j ACCEPT
+earth::ip tunnel add vti-earth local PH_IP_EARTH remote PH_IP_MOON mode vti key 2632
+earth::sysctl -w net.ipv4.conf.vti-earth.disable_policy=1
+earth::ip link set vti-earth up
+earth::ip route add 10.1.0.0/16 dev vti-earth
+earth::iptables -A FORWARD -i vti-earth -j ACCEPT
+earth::iptables -A FORWARD -o vti-earth -j ACCEPT
+moon::systemctl start strongswan
+sun::systemctl start strongswan
+earth::systemctl start strongswan
+moon::expect-connection gw-gw
+moon::expect-connection gw-gw4
+sun::expect-connection gw-gw
+earth::expect-connection gw-gw
+sun::swanctl --initiate --child net-net
+earth::swanctl --initiate --child net-net

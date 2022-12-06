@@ -75,6 +75,12 @@ do
 		;;
 	winnetou)
 		;;
+    earth)
+        eval ipv4_earth1="`echo $HOSTNAMEIPV4 | sed -n -e "s/^.*${host},//gp" | awk -F, '{ print $2 }' | awk '{ print $1 }'`"
+		eval ipv6_earth1="`echo $HOSTNAMEIPV6 | sed -n -e "s/^.*${host},//gp" | awk -F, '{ print $2 }' | awk '{ print $1 }'`"
+        ;;
+    chris)
+        ;;
 	esac
 done
 
@@ -97,6 +103,12 @@ do
 		searchandreplace PH_IP6_SUN1     $ipv6_sun1 $TESTDIR
 		searchandreplace PH_IP6_SUN      $ipv6_sun  $TESTDIR
 		;;
+	earth)
+		searchandreplace PH_IP_EARTH1      $ipv4_earth1 $TESTDIR
+		searchandreplace PH_IP_EARTH       $ipv4_earth  $TESTDIR
+		searchandreplace PH_IP6_EARTH1     $ipv6_earth1 $TESTDIR
+		searchandreplace PH_IP6_EARTH      $ipv6_earth  $TESTDIR
+		;;
 	alice)
 		searchandreplace PH_IP_ALICE1    $ipv4_alice1 $TESTDIR
 		searchandreplace PH_IP_ALICE     $ipv4_alice  $TESTDIR
@@ -110,6 +122,10 @@ do
 	bob)
 		searchandreplace PH_IP_BOB       $ipv4_bob $TESTDIR
 		searchandreplace PH_IPV6_BOB     $ipv6_bob $TESTDIR
+		;;
+	chris)
+		searchandreplace PH_IP_CHRIS       $ipv4_chris $TESTDIR
+		searchandreplace PH_IPV6_CHRIS     $ipv6_chris $TESTDIR
 		;;
 	carol)
 		searchandreplace PH_IP_CAROL1    $ipv4_carol1 $TESTDIR

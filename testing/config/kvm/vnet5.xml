@@ -1,0 +1,11 @@
+<network>
+  <name>vnet5</name>
+  <uuid>088cdb59-0182-4ada-b07f-eec5663b2771</uuid>
+  <forward dev='lo' mode='route'>
+    <interface dev='lo'/>
+  </forward>
+  <bridge name='test-br4' stp='on' delay='0' />
+  <mac address='52:54:00:65:9b:eb'/>
+  <ip address='10.4.0.254' netmask='255.255.0.0'>
+  </ip>
+</network>

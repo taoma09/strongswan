@@ -4,7 +4,7 @@ DIR=$(dirname `readlink -f $0`)
 . $DIR/testing.conf
 . $DIR/scripts/function.sh
 
-NETWORKS="vnet1 vnet2 vnet3 vnet4"
+NETWORKS="vnet1 vnet2 vnet3 vnet4 vnet5"
 CONFDIR=$DIR/config/kvm
 KNLSRC=$BUILDDIR/$KERNEL/arch/x86/boot/bzImage
 KNLTARGET=/var/run/kvm-swan-kernel

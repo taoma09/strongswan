@@ -95,7 +95,7 @@ RSA_SIZE="3072"
 IPSEC_DIR="etc/ipsec.d"
 SWANCTL_DIR="etc/swanctl"
 TKM_DIR="etc/tkm"
-HOSTS="carol dave moon sun alice venus bob"
+HOSTS="carol dave moon sun alice venus bob earth chris"
 TEST_DIR="${DIR}/tests"
 
 # Create directories
@@ -325,6 +325,8 @@ issue_cert 04 sun sun.strongswan.org
 issue_cert 05 alice alice@strongswan.org Sales
 issue_cert 06 venus venus.strongswan.org
 issue_cert 07 bob bob@strongswan.org Research
+issue_cert 20 earth earth.strongswan.org
+issue_cert 21 chris chris@strongswan.org
 
 # Copy carol's credentials into the dave directory of the following scenarios
 for t in ikev2/dynamic-initiator ikev1/dynamic-initiator ikev1/dynamic-responder
