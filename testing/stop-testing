@@ -6,7 +6,7 @@ DIR=$(dirname `readlink -f $0`)
 
 echo "Stopping test environment"
 
-NETWORKS="vnet1 vnet2 vnet3"
+NETWORKS="vnet1 vnet2 vnet3 vnet4"
 KNLTARGET=/var/run/kvm-swan-kernel
 HOSTFSTARGET=/var/run/kvm-swan-hostfs
 TESTRESULTSTARGET=/var/run/kvm-swan-testresults
