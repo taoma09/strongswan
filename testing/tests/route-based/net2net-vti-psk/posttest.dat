@@ -1,0 +1,12 @@
+moon::swanctl --terminate --ike gw-gw
+moon::swanctl --terminate --ike gw-gw4
+moon::systemctl stop strongswan
+sun::systemctl stop strongswan
+earth::systemctl stop strongswan
+moon::iptables-restore < /etc/iptables.flush
+sun::iptables-restore < /etc/iptables.flush
+earth::iptables-restore < /etc/iptables.flush
+moon::ip tunnel del vti-moon
+moon::ip tunnel del vti-moon4
+sun::ip tunnel del vti-sun
+earth::ip tunnel del vti-earth
