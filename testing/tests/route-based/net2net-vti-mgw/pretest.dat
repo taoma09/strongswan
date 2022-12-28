@@ -13,6 +13,8 @@ moon::iptables -A FORWARD -i vti-moon -j ACCEPT
 moon::iptables -A FORWARD -o vti-moon -j ACCEPT
 moon::iptables -A FORWARD -i vti-moon4 -j ACCEPT
 moon::iptables -A FORWARD -o vti-moon4 -j ACCEPT
+moon::iptables -t nat -A PREROUTING -i vti-moon4 -d 172.16.1.10 -j DNAT --to-destination 10.1.0.10
+moon::iptables -t nat -A POSTROUTING -o vti-moon4 -d 10.4.0.10 -j SNAT --to-source 172.16.1.10
 sun::ip tunnel add vti-sun local PH_IP_SUN remote PH_IP_MOON mode vti key 1337
 sun::sysctl -w net.ipv4.conf.vti-sun.disable_policy=1
 sun::ip link set vti-sun up
@@ -25,6 +27,7 @@ earth::ip link set vti-earth up
 earth::ip route add 10.1.0.0/16 dev vti-earth
 earth::iptables -A FORWARD -i vti-earth -j ACCEPT
 earth::iptables -A FORWARD -o vti-earth -j ACCEPT
+earth::ip route add 172.16.1.0/24 dev vti-earth
 moon::systemctl start strongswan
 sun::systemctl start strongswan
 earth::systemctl start strongswan
